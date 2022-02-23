@@ -3,7 +3,7 @@ name: Deploy to Amazon EC2
 on:
   push:
     branches:
-      - master
+      - main
 env:
   SSH_PRIVATE_KEY: ${{ secrets.EC2_KEY }}
   REMOTE_HOST: ${{ secrets.EC2_HOST }}
