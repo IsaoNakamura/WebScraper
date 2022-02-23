@@ -21,16 +21,26 @@ class UtilGspread():
 
     # GoogleSpreadSheetのワークブックを取得
     @classmethod
-    def get_workbook(cls, gspread_sheetkey:str, gspread_accesskey_filepath:str) -> None:
+    def get_workbook(cls, workbook_key:str, access_token:dict) -> None:
         #2つのAPIを記述しないとリフレッシュトークンを3600秒毎に発行し続けなければならない
         scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
         #秘密鍵ファイルパスをクレデンシャル変数に設定
-        credentials = ServiceAccountCredentials.from_json_keyfile_name(gspread_accesskey_filepath, scope)
+        credentials = ServiceAccountCredentials._from_parsed_json_keyfile(access_token, scope)
         #OAuth2の資格情報を使用してGoogle APIにログイン
         gc = gspread.authorize(credentials)
         #共有設定したスプレッドシートを取得
-        workbook = gc.open_by_key(gspread_sheetkey)
+        workbook = gc.open_by_key(workbook_key)
         return workbook
+    # def get_workbook(cls, gspread_sheetkey:str, gspread_accesskey_filepath:str) -> None:
+    #     #2つのAPIを記述しないとリフレッシュトークンを3600秒毎に発行し続けなければならない
+    #     scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
+    #     #秘密鍵ファイルパスをクレデンシャル変数に設定
+    #     credentials = ServiceAccountCredentials.from_json_keyfile_name(gspread_accesskey_filepath, scope)
+    #     #OAuth2の資格情報を使用してGoogle APIにログイン
+    #     gc = gspread.authorize(credentials)
+    #     #共有設定したスプレッドシートを取得
+    #     workbook = gc.open_by_key(gspread_sheetkey)
+    #     return workbook
 
     @classmethod
     def calc_cellname(cls, column:str, row:int) -> str:

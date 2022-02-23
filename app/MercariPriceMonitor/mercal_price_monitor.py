@@ -55,9 +55,11 @@ class MercariPriceScraper():
             gssheet_setting = self.config['gssheet_setting']
             google_api_setting = self.config['google_api_setting']
             
-            workbook_key = google_api_setting['workbook_key']
-            access_key_filepath = google_api_setting['access_key_filepath']
-            workbook = UtilGspread.get_workbook(workbook_key, access_key_filepath)
+            workbook = UtilGspread.get_workbook(
+                google_api_setting['workbook_key'],
+                google_api_setting['access_token']
+                # google_api_setting['access_key_filepath']
+            )
             
             query_sheet_name = gssheet_setting['query_sheet']['sheet_name']
             query_worksheet = workbook.worksheet(query_sheet_name)
