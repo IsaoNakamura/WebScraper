@@ -29,7 +29,7 @@ jobs:
     # - name: Install dependencies
     #   run: pip install -r requirements.txt
     - name: Generate GoogleAccessTokenFile
-      run: ${{ secrets.GOOGLE_ACCESS_TOKEN }}>./app/MercariPriceMonitor/google_token_file.json
+      run: echo ${{ secrets.GOOGLE_ACCESS_TOKEN }}>./app/MercariPriceMonitor/google_token_file.json
     - name: Generate configuretion file
       run: python ./app/MercariPriceMonitor/gen_config.py --line_token ${{ secrets.LINE_ACCESS_TOKEN }} --google_token_file ./app/MercariPriceMonitor/google_token_file.json --google_workbook ${{ secrets.GOOGLE_WORKBOOK_KEY }}
     - name: Deploy to EC2
