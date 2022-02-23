@@ -11,11 +11,7 @@ env:
   REMOTE_USER: ${{ secrets.EC2_USER }}
   TARGET: ${{ secrets.EC2_OUTPUT_DIR }}
   SOURCE: '../WebScraper'
-  # for gen_config.py
-  LINE_ACCESS_TOKEN: ${{ secrets.LINE_ACCESS_TOKEN }}
-  GOOGLE_ACCESS_TOKEN: ${{ secrets.GOOGLE_ACCESS_TOKEN }}
-  GOOGLE_WORKBOOK_KEY: ${{ secrets.GOOGLE_WORKBOOK_KEY }}
-
+  
 jobs:
   deploy:
     name: Deploy
@@ -33,6 +29,6 @@ jobs:
     - name: Install dependencies
       run: pip install -r requirements.txt
     - name: Generate configuretion file
-      run: python ./app/MercariPriceMonitor/gen_config.py --line_token LINE_ACCESS_TOKEN --google_token GOOGLE_ACCESS_TOKEN --google_workbook GOOGLE_WORKBOOK_KEY
+      run: python ./app/MercariPriceMonitor/gen_config.py --line_token ${{ secrets.LINE_ACCESS_TOKEN }} --google_token ${{ secrets.GOOGLE_ACCESS_TOKEN }} --google_workbook ${{ secrets.GOOGLE_WORKBOOK_KEY }}
     - name: Deploy to EC2
       uses: easingthemes/ssh-deploy@v2.1.1
