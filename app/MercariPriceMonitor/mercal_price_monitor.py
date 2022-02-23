@@ -2,7 +2,6 @@ import sys
 import os
 import time
 import datetime
-from typing import List
 
 # 実行ファイルのディレクトリ絶対パスを取得
 EXECFILE_DIR = os.path.dirname(os.path.abspath(__file__))
