@@ -32,5 +32,7 @@ jobs:
       run: echo -E '${{ secrets.GOOGLE_ACCESS_TOKEN }}'>./app/MercariPriceMonitor/google_token_file.json
     - name: Generate configuretion file
       run: python ./app/MercariPriceMonitor/gen_config.py --line_token ${{ secrets.LINE_ACCESS_TOKEN }} --google_token_file ./app/MercariPriceMonitor/google_token_file.json --google_workbook ${{ secrets.GOOGLE_WORKBOOK_KEY }}
+    - name: Delete GoogleAccessTokenFile
+      run: rm ./app/MercariPriceMonitor/google_token_file.json
     - name: Deploy to EC2
       uses: easingthemes/ssh-deploy@v2.1.1
