@@ -52,12 +52,17 @@ jobs:
         --message "Finished deploy for WebScraper."
     
     - name: Run LineNotify-Lambda
+      id: run_line_notify_lambda
       run: |
         aws lambda invoke \
         --function-name LineNotify \
         --payload file://./aws_lambda/line_notify/payload.json \
         --cli-binary-format raw-in-base64-out \
         --region ap-northeast-1 response.json
+  
+      - name: run if fail_step failed
+        if: failure() && steps.run_line_notify_lambda.outcome == 'failure'
+        run: echo "${{ steps.run_line_notify_lambda.outcome }}"
     
     - name: Delete File for LineNotify
       run: |
