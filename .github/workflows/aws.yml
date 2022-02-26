@@ -59,20 +59,20 @@ jobs:
         --cli-binary-format raw-in-base64-out \
         --region ap-northeast-1 ./aws_lambda/line_notify/response.json
     
-    - name: Check Response of LineNotify-Lambda
-      id: check_response_line_notify_lambda
-      run: |
-        python ./aws_lambda/line_notify/check_response.py \
-        --resfile ./aws_lambda/line_notify/response.json
+    # - name: Check Response of LineNotify-Lambda
+    #   id: check_response_line_notify_lambda
+    #   run: |
+    #     python ./aws_lambda/line_notify/check_response.py \
+    #     --resfile ./aws_lambda/line_notify/response.json
   
-    - name: run if fail_step failed
-      if: failure() && steps.check_response_line_notify_lambda.outcome == 'failure'
-      run: echo "${{ steps.check_response_line_notify_lambda.outcome }}"
+    # - name: run if fail_step failed
+    #   if: failure() && steps.check_response_line_notify_lambda.outcome == 'failure'
+    #   run: echo "${{ steps.check_response_line_notify_lambda.outcome }}"
     
     - name: Delete File for LineNotify
       run: |
         rm ./aws_lambda/line_notify/payload.json
-        rm ./aws_lambda/line_notify/response.json
+        # rm ./aws_lambda/line_notify/response.json
     
     - name: Deploy to EC2
       uses: easingthemes/ssh-deploy@v2.1.1
