@@ -40,12 +40,13 @@ jobs:
       run: python ./app/MercariPriceMonitor/gen_config.py --line_token ${{ secrets.LINE_ACCESS_TOKEN }} --google_token_file ./app/MercariPriceMonitor/google_token_file.json --google_workbook ${{ secrets.GOOGLE_WORKBOOK_KEY }}
     - name: Delete GoogleAccessTokenFile
       run: rm ./app/MercariPriceMonitor/google_token_file.json
+    - name: Generate PayloadFile for LineNotify
+      run: python ./aws_lambda/line_notify/gen_payload.py --line_token ${{ secrets.LINE_ACCESS_TOKEN }} --url "https://notify-api.line.me/api/notify" --message "Finished deploy for WebScraper."
     - name: Run LineNotify-Lambda
       run: |
-        (echo -E '{ "access_token":${{ secrets.LINE_ACCESS_TOKEN }}, "url":"https://notify-api.line.me/api/notify", "message": "Finished deploy for WebScraper." }' | base64)>./payload.json
         aws lambda invoke \
         --function-name LineNotify \
-        --payload file://./payload.json \
+        --payload file://./aws_lambda/line_notify/payload.json \
         --cli-binary-format raw-in-base64-out \
         --region ap-northeast-1 response.json
     - name: Deploy to EC2
