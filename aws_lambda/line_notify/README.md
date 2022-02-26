@@ -6,3 +6,8 @@ cd aws_lambda/line_notify
 pip install -r requirements.txt -t .
 zip -r line_notify.zip *
 ```
+
+## ポリシー追加
+```
+AWSLambdaRole
+```
