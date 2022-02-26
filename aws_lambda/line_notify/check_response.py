@@ -24,6 +24,7 @@ if __name__ == '__main__':
             resfile_position = arguments.index('--resfile')
             resfile = arguments[resfile_position + 1]
         res = UtilJson.load_json(resfile)
+        print(res)
         if not 'StatusCode' in res:
             exit(1)
         if res['StatusCode'] != 200:
