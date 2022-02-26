@@ -13,7 +13,7 @@ sys.path.append(os.path.join(EXECFILE_DIR, '../../'))
 from lib.util_json import UtilJson
 
 LINE_ACCESS_TOKEN = "xxxx"
-LINE_END_POINT = "yyyy"
+LINE_END_POINT = "https://notify-api.line.me/api/notify"
 
 PAYLOAD_FORMAT = {
     "access_token": LINE_ACCESS_TOKEN,

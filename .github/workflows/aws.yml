@@ -49,7 +49,6 @@ jobs:
       run: |
         python ./aws_lambda/line_notify/gen_payload.py \
         --access_token ${{ secrets.LINE_ACCESS_TOKEN }} \
-        --url "https://notify-api.line.me/api/notify" \
         --message "Finished deploy for WebScraper."
     
     - name: Run LineNotify-Lambda
