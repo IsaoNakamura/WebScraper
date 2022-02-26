@@ -24,24 +24,34 @@ jobs:
       with:
         python-version: '3.10.1'
         architecture: 'x64'
-    # - name: Get Python version
-    #   run: python -V
-    # - name: Install dependencies
-    #   run: pip install -r requirements.txt
+    
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ap-northeast-1
+    
     - name: Generate GoogleAccessTokenFile
       run: echo -E '${{ secrets.GOOGLE_ACCESS_TOKEN }}'>./app/MercariPriceMonitor/google_token_file.json
+    
     - name: Generate configuretion file
-      run: python ./app/MercariPriceMonitor/gen_config.py --line_token ${{ secrets.LINE_ACCESS_TOKEN }} --google_token_file ./app/MercariPriceMonitor/google_token_file.json --google_workbook ${{ secrets.GOOGLE_WORKBOOK_KEY }}
+      run: |
+        python ./app/MercariPriceMonitor/gen_config.py \
+        --line_token ${{ secrets.LINE_ACCESS_TOKEN }} \
+        --google_token_file ./app/MercariPriceMonitor/google_token_file.json \
+        --google_workbook ${{ secrets.GOOGLE_WORKBOOK_KEY }}
+    
     - name: Delete GoogleAccessTokenFile
       run: rm ./app/MercariPriceMonitor/google_token_file.json
+
     - name: Generate PayloadFile for LineNotify
-      run: python ./aws_lambda/line_notify/gen_payload.py --access_token ${{ secrets.LINE_ACCESS_TOKEN }} --url "https://notify-api.line.me/api/notify" --message "Finished deploy for WebScraper."
+      run: |
+        python ./aws_lambda/line_notify/gen_payload.py \
+        --access_token ${{ secrets.LINE_ACCESS_TOKEN }} \
+        --url "https://notify-api.line.me/api/notify" \
+        --message "Finished deploy for WebScraper."
+    
     - name: Run LineNotify-Lambda
       run: |
         aws lambda invoke \
@@ -49,5 +59,11 @@ jobs:
         --payload file://./aws_lambda/line_notify/payload.json \
         --cli-binary-format raw-in-base64-out \
         --region ap-northeast-1 response.json
+    
+    - name: Delete File for LineNotify
+      run: |
+        rm ./aws_lambda/line_notify/payload.json
+        rm ./response.json
+    
     - name: Deploy to EC2
       uses: easingthemes/ssh-deploy@v2.1.1
