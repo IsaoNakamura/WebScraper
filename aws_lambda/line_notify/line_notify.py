@@ -17,4 +17,4 @@ def lambda_handler(event, context):
     #     'body': json.dumps('Hello from Lambda!')
     # }
     # return { 'StatusCode': res.status_code }
-    return json.dumps(res)
+    return json.dumps(json.load(res))
