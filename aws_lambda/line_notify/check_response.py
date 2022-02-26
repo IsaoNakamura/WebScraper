@@ -29,8 +29,8 @@ if __name__ == '__main__':
         # if res['StatusCode'] != 200:
         #     exit(1)
         if res != 200:
-            exit(0)
-        exit(1)
+            exit(1)
+        exit(0)
     except Exception as err:
         print(err)
         exit(1)
