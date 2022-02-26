@@ -16,6 +16,7 @@ from lib.util_json import UtilJson
 if __name__ == '__main__':
     # エントリポイント
     try:
+        resfile = os.path.join(SRC_DIR, "response.json")
         arguments = sys.argv
         # - で始まるoption
         options = [option for option in arguments if option.startswith('-')]
@@ -23,9 +24,11 @@ if __name__ == '__main__':
             resfile_position = arguments.index('--resfile')
             resfile = arguments[resfile_position + 1]
         res = UtilJson.load_json(resfile)
-        if not 'StatusCode' in res:
-            exit(1)
-        if res['StatusCode'] != 200:
+        # if not 'StatusCode' in res:
+        #     exit(1)
+        # if res['StatusCode'] != 200:
+        #     exit(1)
+        if res != 200:
             exit(1)
         exit(1)
     except Exception as err:
