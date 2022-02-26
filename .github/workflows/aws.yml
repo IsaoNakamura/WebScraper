@@ -41,7 +41,7 @@ jobs:
     - name: Delete GoogleAccessTokenFile
       run: rm ./app/MercariPriceMonitor/google_token_file.json
     - name: Generate PayloadFile for LineNotify
-      run: python ./aws_lambda/line_notify/gen_payload.py --line_token ${{ secrets.LINE_ACCESS_TOKEN }} --url "https://notify-api.line.me/api/notify" --message "Finished deploy for WebScraper."
+      run: python ./aws_lambda/line_notify/gen_payload.py --access_token ${{ secrets.LINE_ACCESS_TOKEN }} --url "https://notify-api.line.me/api/notify" --message "Finished deploy for WebScraper."
     - name: Run LineNotify-Lambda
       run: |
         aws lambda invoke \
