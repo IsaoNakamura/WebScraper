@@ -72,7 +72,7 @@ jobs:
     - name: Delete File for LineNotify
       run: |
         rm ./aws_lambda/line_notify/payload.json
-        # rm ./aws_lambda/line_notify/response.json
+        rm ./aws_lambda/line_notify/response.json
     
     - name: Deploy to EC2
       uses: easingthemes/ssh-deploy@v2.1.1
