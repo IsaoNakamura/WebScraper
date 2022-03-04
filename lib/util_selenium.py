@@ -144,9 +144,11 @@ class UtilSelenium():
             wait.until( EC.visibility_of_element_located((By.ID, "item-grid")) )
             item_grid = self.driver.find_element(by=By.ID, value="item-grid")
             #items = item_grid.find_elements(by=By.TAG_NAME, value="mer-item-thumbnail")
+            wait.until( EC.visibility_of_element_located((By.TAG_NAME, "a")) )
             items = item_grid.find_elements(by=By.TAG_NAME, value="a")
             market_items = []
             for item in items:
+                wait.until( EC.visibility_of_element_located((By.TAG_NAME, "mer-item-thumbnail")) )
                 thumbnail = item.find_element(by=By.TAG_NAME, value="mer-item-thumbnail")
                 #name = thumbnail.get_attribute('item-name')
                 market_item = {
